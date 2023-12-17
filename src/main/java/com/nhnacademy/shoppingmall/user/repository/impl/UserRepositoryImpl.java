@@ -87,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public int save(User user) {
         Precondition.isCheckNull(user, "user Null");
-        String sql = "insert into (userId, user_name, user_password, user_birth, user_auth, user_point,created_at) users values(?,?,?,?,?,?,?)";
+        String sql = "insert into  users (user_Id, user_name, user_password, user_birth, user_auth, user_point,created_at)values(?,?,?,?,?,?,?)";
         Connection connection = DbConnectionThreadLocal.getConnection();
         try (PreparedStatement psmt = connection.prepareStatement(sql)) {
             psmt.setString(1, user.getUserId());
@@ -106,7 +106,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public int deleteByUserId(String userId) {
         Precondition.isCheckNull(userId, "userId Null");
-        String sql = "delete from users where userId = ?";
+        String sql = "delete from users where user_id = ?";
         Connection connection = DbConnectionThreadLocal.getConnection();
 
         try (PreparedStatement psmt = connection.prepareStatement(sql)) {
@@ -129,7 +129,7 @@ public class UserRepositoryImpl implements UserRepository {
             psmt.setString(2, user.getUserName());
             psmt.setString(3, user.getUserPassword());
             psmt.setString(4, user.getUserBirth());
-            psmt.setString(5, user.getUserBirth());
+            psmt.setString(5, String.valueOf(user.getUserAuth()));
             psmt.setInt(6, user.getUserPoint());
             psmt.setString(7, String.valueOf(user.getCreatedAt()));
             psmt.setString(8, user.getUserId());
