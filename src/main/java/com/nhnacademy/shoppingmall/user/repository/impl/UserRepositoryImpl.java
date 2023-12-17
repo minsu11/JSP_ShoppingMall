@@ -105,7 +105,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int deleteByUserId(String userId) {
-        return 0;
+        Precondition.isCheckNull(userId, "userId Null");
+        String sql = "delete from users where userId = ?";
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, userId);
+            return psmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
