@@ -119,7 +119,23 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int update(User user) {
-        return 0;
+        Precondition.isCheckNull(user, "user Null");
+        String sql = "update users set user_id = ?, user_name = ?, user_password = ?, user_birth =?,user_auth = ?, user_point=?, created_at =? where user_id =?";
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, user.getUserId());
+            psmt.setString(2, user.getUserName());
+            psmt.setString(3, user.getUserPassword());
+            psmt.setString(4, user.getUserBirth());
+            psmt.setString(5, user.getUserBirth());
+            psmt.setInt(6, user.getUserPoint());
+            psmt.setString(7, String.valueOf(user.getCreatedAt()));
+            psmt.setString(8, user.getUserId());
+            return psmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("update error");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
