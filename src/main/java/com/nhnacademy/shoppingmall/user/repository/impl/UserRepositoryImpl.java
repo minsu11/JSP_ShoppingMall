@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.user.repository.impl;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
+import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 import java.sql.Connection;
@@ -17,6 +18,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByUserIdAndUserPassword(String userId, String userPassword) {
+        Precondition.isCheckNull(userId, "userId Null");
+        Precondition.isCheckNull(userPassword, "userPassword Null");
         Connection connection = DbConnectionThreadLocal.getConnection();
         String sql = "select user_id, user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_id=? and user_password =?";
 
@@ -50,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(String userId) {
-
+        Precondition.isCheckNull(userId, "userId Null");
         Connection connection = DbConnectionThreadLocal.getConnection();
         String sql = "select user_id, user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_id=?";
 
