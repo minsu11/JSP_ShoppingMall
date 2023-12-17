@@ -86,8 +86,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int save(User user) {
-
-        return 0;
+        Precondition.isCheckNull(user, "user Null");
+        String sql = "insert into (userId, user_name, user_password, user_birth, user_auth, user_point,created_at) users values(?,?,?,?,?,?,?)";
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, user.getUserId());
+            psmt.setString(2, user.getUserName());
+            psmt.setString(3, user.getUserPassword());
+            psmt.setString(4, user.getUserBirth());
+            psmt.setString(5, String.valueOf(user.getUserAuth()));
+            psmt.setInt(6, user.getUserPoint());
+            psmt.setString(7, String.valueOf(user.getCreatedAt()));
+            return psmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
