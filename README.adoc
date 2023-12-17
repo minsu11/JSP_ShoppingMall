@@ -1,0 +1,3 @@
+= ShoppingMall 개발
+
+- JSP, JDBC를 사용한 Shopping Mall 개발
