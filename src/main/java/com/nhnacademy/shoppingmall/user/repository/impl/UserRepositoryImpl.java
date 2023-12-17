@@ -121,6 +121,8 @@ public class UserRepositoryImpl implements UserRepository {
     public int update(User user) {
         Precondition.isCheckNull(user, "user Null");
         String sql = "update users set user_id = ?, user_name = ?, user_password = ?, user_birth =?,user_auth = ?, user_point=?, created_at =? where user_id =?";
+        log.debug("sql:{}", sql);
+
         Connection connection = DbConnectionThreadLocal.getConnection();
         try (PreparedStatement psmt = connection.prepareStatement(sql)) {
             psmt.setString(1, user.getUserId());
@@ -140,7 +142,18 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int updateLatestLoginAtByUserId(String userId, LocalDateTime latestLoginAt) {
-        return 0;
+        Precondition.isCheckNull(userId);
+        Precondition.isCheckNull(latestLoginAt);
+        String sql = "update users set latest_login_at = ? where user_id = ?";
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, String.valueOf(latestLoginAt));
+            psmt.setString(2, userId);
+            return psmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("error");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
