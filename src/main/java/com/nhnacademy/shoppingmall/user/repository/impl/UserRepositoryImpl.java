@@ -158,6 +158,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int countByUserId(String userId) {
+        Precondition.isCheckNull(userId, "userId null");
+
+        String sql = "select count(*) as count from users where user_id = ?";
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, userId);
+
+            try (ResultSet rs = psmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return 0;
     }
 
