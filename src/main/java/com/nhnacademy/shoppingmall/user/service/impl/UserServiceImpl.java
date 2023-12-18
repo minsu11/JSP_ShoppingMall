@@ -31,10 +31,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        if (userRepository.countByUserId(user.getUserId()) < 1) {
-            userRepository.save(user);
+        if (userRepository.countByUserId(user.getUserId()) > 0) {
+            throw new UserAlreadyExistsException("user");
         }
-        throw new UserAlreadyExistsException("user");
+        userRepository.save(user);
     }
 
     @Override
