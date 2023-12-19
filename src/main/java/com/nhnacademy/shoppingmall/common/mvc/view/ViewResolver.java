@@ -25,7 +25,10 @@ public class ViewResolver {
 
     public String getPath(String viewName) {
         Precondition.isCheckNull(viewName);
-        return postfix + viewName + postfix;
+        if (viewName.startsWith("/")) {
+            viewName = viewName.substring(1, viewName.length());
+        }
+        return prefix + viewName + postfix;
     }
 
     public boolean isRedirect(String viewName) {
@@ -36,9 +39,9 @@ public class ViewResolver {
     }
 
     public String getRedirectUrl(String viewName) {
-        //todo#6-3 REDIRECT_PREFIX를 제외한 url을 반환 합니다.
+        Precondition.isCheckNull(viewName);
 
-        return "";
+        return viewName.substring(REDIRECT_PREFIX.length());
     }
 
     public String getLayOut(String viewName) {
