@@ -45,12 +45,9 @@ public class ViewResolver {
     }
 
     public String getLayOut(String viewName) {
-
-        /*todo#6-4 viewName에
-           /admin/경로가 포함되었다면 DEFAULT_ADMIN_LAYOUT 반환 합니다.
-           /admin/경로가 포함되어 있지않다면 DEFAULT_SHOP_LAYOUT 반환 합니다.
-        */
-
+        if (viewName.startsWith("/admin")) {
+            return DEFAULT_ADMIN_LAYOUT;
+        }
         return DEFAULT_SHOP_LAYOUT;
     }
 }
