@@ -32,7 +32,7 @@ public class ViewResolver {
     }
 
     public boolean isRedirect(String viewName) {
-        if (viewName.equals(REDIRECT_PREFIX)) {
+        if (viewName.toLowerCase().startsWith(REDIRECT_PREFIX)) {
             return true;
         }
         return false;
