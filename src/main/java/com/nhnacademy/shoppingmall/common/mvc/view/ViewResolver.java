@@ -29,7 +29,9 @@ public class ViewResolver {
     }
 
     public boolean isRedirect(String viewName) {
-        //todo#6-2 REDIRECT_PREFIX가 포함되어 있는지 체크 합니다.
+        if (viewName.equals(REDIRECT_PREFIX)) {
+            return true;
+        }
         return false;
     }
 
