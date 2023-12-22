@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebFilter(name = "welcomePageFilter", value = "/*", initParams = {@WebInitParam(name = "welcome", value = "/")})
+@WebFilter(filterName = "welcomePageFilter", value = "/*", initParams = {@WebInitParam(name = "welcome", value = "/")})
 public class WelcomePageFilter extends HttpFilter {
 
     @Override
