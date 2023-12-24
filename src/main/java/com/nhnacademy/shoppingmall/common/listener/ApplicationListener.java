@@ -31,6 +31,6 @@ public class ApplicationListener implements ServletContextListener {
         DbConnectionThreadLocal.reset();
 
         log.debug("contextInitialized end");
-        sce.getServletContext().setAttribute("userSevice", userService);
+        sce.getServletContext().setAttribute("userService", userService);
     }
 }
