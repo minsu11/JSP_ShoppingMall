@@ -10,7 +10,7 @@
 
 </div><div class="container mt-5">
     <h2 class="text-center">회원가입</h2>
-    <form action="/signup" method="POST">
+    <form action="/signupAction.do" method="POST">
         <div class="mb-3">
             <label for="userInputId" class="form-label">아이디</label>
             <input type="text" class="form-control" id="userInputId" name="user_input_id" required>
@@ -42,7 +42,7 @@
 <script>
     $(document).ready(function() {
         $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+            format: 'yyyymmdd',
             autoclose: true,
             todayHighlight: true
         });
