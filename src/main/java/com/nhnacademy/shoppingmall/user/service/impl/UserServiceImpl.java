@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User doLogin(String userId, String userPassword) {
         User user = userRepository.findByUserIdAndUserPassword(userId, userPassword).orElse(null);
+
         if (Objects.nonNull(user)) {
             userRepository.updateLatestLoginAtByUserId(user.getUserId(), LocalDateTime.now());
             return user;

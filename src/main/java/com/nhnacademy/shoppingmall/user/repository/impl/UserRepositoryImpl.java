@@ -3,6 +3,7 @@ package com.nhnacademy.shoppingmall.user.repository.impl;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.enumulation.Role;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

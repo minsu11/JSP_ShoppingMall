@@ -1,7 +1,14 @@
 package com.nhnacademy.shoppingmall.user.domain;
 
+import com.nhnacademy.shoppingmall.user.enumulation.Role;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+
+@Getter
 
 public class User {
     public enum Auth{
@@ -28,37 +35,7 @@ public class User {
         this.latestLoginAt=latestLoginAt;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public String getUserBirth() {
-        return userBirth;
-    }
-
-    public Auth getUserAuth() {
-        return userAuth;
-    }
-
-    public int getUserPoint() {
-        return userPoint;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getLatestLoginAt() {
-        return latestLoginAt;
-    }
 
     public void setUserName(String userName) {
         this.userName = userName;

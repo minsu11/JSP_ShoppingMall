@@ -4,6 +4,7 @@ import static javax.servlet.RequestDispatcher.*;
 
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
 import com.nhnacademy.shoppingmall.common.mvc.controller.ControllerFactory;
+import com.nhnacademy.shoppingmall.common.mvc.controller.ControllerProxy;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 import com.nhnacademy.shoppingmall.common.mvc.view.ViewResolver;
 import javax.servlet.RequestDispatcher;
@@ -29,9 +30,10 @@ public class FrontServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            DbConnectionThreadLocal.initialize();
+
             BaseController baseController = (BaseController) controllerFactory.getController(req);
-            String viewName = baseController.execute(req, resp);
+            ControllerProxy controllerProxy = new ControllerProxy(baseController);
+            String viewName = controllerProxy.execute(req,resp);
 
             if (viewResolver.isRedirect(viewName)) {
                 String redirectUrl = viewResolver.getRedirectUrl(viewName);
@@ -46,16 +48,12 @@ public class FrontServlet extends HttpServlet {
             }
         } catch (Exception e) {
             log.error("error:{}", e);
-            DbConnectionThreadLocal.setSqlError(true);
             req.setAttribute("status_code", req.getAttribute(ERROR_STATUS_CODE));
             req.setAttribute("exception_type", req.getAttribute(ERROR_EXCEPTION_TYPE));
             req.setAttribute("message", req.getAttribute(ERROR_MESSAGE));
             req.setAttribute("exception", req.getAttribute(ERROR_EXCEPTION));
             req.setAttribute("request_uri", req.getAttribute(ERROR_REQUEST_URI));
             log.error("status_code:{}", req.getAttribute(ERROR_STATUS_CODE));
-        } finally {
-            DbConnectionThreadLocal.reset();
-
         }
     }
 
