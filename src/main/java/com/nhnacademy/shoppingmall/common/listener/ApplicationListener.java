@@ -21,16 +21,23 @@ public class ApplicationListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         log.debug("contextInitialized start");
         DbConnectionThreadLocal.initialize();
-        if (Objects.isNull(userService.getUser("admin"))) { // admin 존재 시
-            User admin = new User("admin", "admin", "1234", "10001010", User.Auth.ROLE_ADMIN, 1000000, LocalDateTime.now(), null);
+
+        try{
+           userService.getUser("admin");
+        }catch (Exception e){
+            User admin = new User(1,"admin", "admin", "1234", "10001010", User.Auth.ROLE_ADMIN, 1000000, LocalDateTime.now(), null);
             log.debug("admin:{}", admin);
             userService.saveUser(admin);
         }
-        if (Objects.isNull(userService.getUser("user"))) { // user 존재 시
-            User user = new User("user", "user", "1234", "10001011", User.Auth.ROLE_USER, 1000000, LocalDateTime.now(), null);
+
+        try{
+            userService.getUser("user");
+        }catch (Exception e){
+            User user = new User(2,"user", "user", "1234", "10001011", User.Auth.ROLE_USER, 1000000, LocalDateTime.now(), null);
             log.debug("user:{}", user);
             userService.saveUser(user);
         }
+
 
         DbConnectionThreadLocal.reset();
 

@@ -1,20 +1,22 @@
 package com.nhnacademy.shoppingmall.user.domain;
 
-import com.nhnacademy.shoppingmall.user.enumulation.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
 @Getter
-
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class User {
     public enum Auth{
         ROLE_ADMIN,ROLE_USER
     }
 
+    private Integer id;
     private String userId;
     private String userName;
     private String userPassword;
@@ -23,17 +25,6 @@ public class User {
     private int userPoint;
     private LocalDateTime createdAt;
     private LocalDateTime latestLoginAt;
-
-    public User (String userId, String userName, String userPassword, String userBirth, Auth userAuth, int userPoint, LocalDateTime createdAt, LocalDateTime latestLoginAt ){
-        this.userId = userId;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.userBirth = userBirth;
-        this.userAuth = userAuth;
-        this.userPoint = userPoint;
-        this.createdAt = createdAt;
-        this.latestLoginAt=latestLoginAt;
-    }
 
 
 
@@ -89,3 +80,4 @@ public class User {
                 '}';
     }
 }
+

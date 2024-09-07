@@ -4,6 +4,7 @@ import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import com.nhnacademy.shoppingmall.common.mvc.annotation.Transaction;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.dto.LoginResponse;
 import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
 import com.nhnacademy.shoppingmall.user.service.UserService;
 import com.nhnacademy.shoppingmall.user.service.impl.UserServiceImpl;
@@ -24,15 +25,15 @@ public class LoginPostController implements BaseController {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String userId = req.getParameter("user_id");
         String userPassword = req.getParameter("user_password");
-        User user = userService.doLogin(userId, userPassword);
-        log.debug("user:{}", user);
-        if (Objects.nonNull(user)) { // user 존재 시
+        LoginResponse loginResponse = userService.doLogin(userId, userPassword);
+        log.debug("user:{}", loginResponse);
+        if (Objects.nonNull(loginResponse)) { // user 존재 시
             HttpSession loginSession = req.getSession(true);
             loginSession.setMaxInactiveInterval(3600);
-            loginSession.setAttribute("login", user);
+            loginSession.setAttribute("loginResponse", loginResponse);
             log.debug("login session:{}", loginSession);
-            return "shop/main/index";
+            return "/index.do";
         }
-        return "shop/login/login_form";
+        return "/login.do";
     }
 }

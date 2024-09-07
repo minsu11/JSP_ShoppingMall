@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.user.service.impl;
 
 import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.dto.LoginResponse;
 import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
 import com.nhnacademy.shoppingmall.user.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
@@ -19,15 +20,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String userId) {
+    public User getUser(Integer userId) {
         Precondition.isCheckNull(userId);
-        User user = userRepository.findById(userId).orElse(null);
-        if (Objects.isNull(user)) {
-            log.debug("user:{}", user);
-            return null;
-        }
-        return user;
+        Precondition.checkNegativeInteger(userId);
+        return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
     }
+    @Override
+    public User getUser(String userInputId) {
+        Precondition.isCheckNull(userInputId);
+        Precondition.checkEmpty(userInputId);
+        return userRepository.findByInputId(userInputId).orElseThrow(()-> new UserNotFoundException("user not found"));
+    }
+
 
     @Override
     public void saveUser(User user) {
@@ -45,22 +49,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String userId) {
-        if (userRepository.countByUserId(userId) > 0) {
-            userRepository.deleteByUserId(userId);
-        }
+    public void deleteUser(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
+
+        userRepository.deleteByUserId(user.getId());
 
     }
 
     @Override
-    public User doLogin(String userId, String userPassword) {
-        User user = userRepository.findByUserIdAndUserPassword(userId, userPassword).orElse(null);
+    public LoginResponse doLogin(String userInputId, String userPassword) {
+        User user = userRepository.findByUserIdAndUserPassword(userInputId, userPassword).orElseThrow(()-> new UserNotFoundException("login fail"));
 
-        if (Objects.nonNull(user)) {
-            userRepository.updateLatestLoginAtByUserId(user.getUserId(), LocalDateTime.now());
-            return user;
-        }
-        throw new UserNotFoundException("login fail");
+        userRepository.updateLatestLoginAtByUserId(user.getUserId(), LocalDateTime.now());
+        return new LoginResponse(user.getId(), user.getUserAuth().name());
     }
 
 }
