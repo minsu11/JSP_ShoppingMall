@@ -36,16 +36,12 @@
                     </form>
                     <%
                         HttpSession session = request.getSession(false);
-                        if(session == null){
-                            return;
+                        if(session != null){
+                            LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
+                            if(loginResponse != null){
+                                request.setAttribute("login",loginResponse);
+                            }
                         }
-
-                        LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
-                        if(loginResponse != null){
-                            request.setAttribute("login",loginResponse);
-                        }
-
-
                 %>
                     <c:choose>
                         <c:when test="${empty login }">
@@ -57,7 +53,7 @@
 
                         <c:otherwise>
                             <div class="text-end">
-                                <a class="btn btn-outline-light me-2" href="/logout.do" >로그아웃</a>
+                                <a class="btn btn-outline-light me-2" href="/logoutAction.do" >로그아웃</a>
                             </div>
                         </c:otherwise>
 
