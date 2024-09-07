@@ -19,7 +19,7 @@ public class LoginCheckFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession httpSession = req.getSession(false);
-        User user = (User) httpSession.getAttribute("login");
+        User user = (User) httpSession.getAttribute("loginResponse");
         if (Objects.nonNull(user)) {
             req.setAttribute(ViewResolver.LAYOUT_MYPAGE, "/WEB-INF/views/layout/mypage.jsp");
             chain.doFilter(req, res);

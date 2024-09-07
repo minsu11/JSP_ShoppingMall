@@ -31,9 +31,10 @@ public class LoginPostController implements BaseController {
             HttpSession loginSession = req.getSession(true);
             loginSession.setMaxInactiveInterval(3600);
             loginSession.setAttribute("loginResponse", loginResponse);
+            req.getServletContext().setAttribute("loginSession", loginSession);
             log.debug("login session:{}", loginSession);
-            return "/index.do";
+            return "redirect:/index.do";
         }
-        return "/login.do";
+        return "redirect:/login.do";
     }
 }

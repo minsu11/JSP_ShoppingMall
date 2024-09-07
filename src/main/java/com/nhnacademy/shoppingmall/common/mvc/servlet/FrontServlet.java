@@ -34,11 +34,11 @@ public class FrontServlet extends HttpServlet {
             BaseController baseController = (BaseController) controllerFactory.getController(req);
             ControllerProxy controllerProxy = new ControllerProxy(baseController);
             String viewName = controllerProxy.execute(req,resp);
-
+            log.debug("log: {}",viewName);
             if (viewResolver.isRedirect(viewName)) {
                 String redirectUrl = viewResolver.getRedirectUrl(viewName);
                 log.debug("redirectUrl:{}", redirectUrl);
-                resp.sendRedirect(viewName);
+                resp.sendRedirect(redirectUrl);
             } else {
                 String layout = viewResolver.getLayOut(viewName);
                 log.debug("viewName:{}", viewResolver.getPath(viewName));

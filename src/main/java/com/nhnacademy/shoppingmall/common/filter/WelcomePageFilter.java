@@ -16,8 +16,6 @@ public class WelcomePageFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        log.debug(req.getServletPath());
-        log.debug(getFilterConfig().getInitParameter("welcome"));
         if (req.getServletPath().equals(getFilterConfig().getInitParameter("welcome"))) {
             res.sendRedirect("/index.do");
         } else {

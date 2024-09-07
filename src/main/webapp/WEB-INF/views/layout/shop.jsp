@@ -1,3 +1,4 @@
+<%@ page import="com.nhnacademy.shoppingmall.user.dto.LoginResponse" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -33,11 +34,29 @@
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                         <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                     </form>
+                    <%
+                        HttpSession session = request.getSession(false);
+                        if(session != null){
+                            LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
+                            request.setAttribute("login",loginResponse);
+                        }
 
-                    <div class="text-end">
-                        <a class="btn btn-outline-light me-2" href="/login.do" >로그인</a>
-                        <a class="btn btn-warning" href="signup.do" >회원가입</a>
-                    </div>
+                %>
+                    <c:choose>
+                        <c:when test="${empty login }">
+                            <div class="text-end">
+                                <a class="btn btn-outline-light me-2" href="/login.do" >로그인</a>
+                                <a class="btn btn-warning" href="signup.do" >회원가입</a>
+                            </div>
+                        </c:when>
+
+                        <c:otherwise>
+                            <div class="text-end">
+                                <a class="btn btn-outline-light me-2" href="/logout.do" >로그아웃</a>
+                            </div>
+                        </c:otherwise>
+
+                    </c:choose>
                 </div>
             </div>
         </header>

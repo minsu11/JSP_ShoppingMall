@@ -21,7 +21,7 @@ public class UserRepositoryImpl implements UserRepository {
         Precondition.isCheckNull(userId, "userId Null");
         Precondition.isCheckNull(userPassword, "userPassword Null");
         Connection connection = DbConnectionThreadLocal.getConnection();
-        String sql = "select user_id, user_input_id user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_id=? and user_password =?";
+        String sql = "select user_id, user_input_id, user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_input_id=? and user_password =?";
 
         log.debug("sql:{}", sql);
 
@@ -179,7 +179,7 @@ public class UserRepositoryImpl implements UserRepository {
     public int updateLatestLoginAtByUserId(String userId, LocalDateTime latestLoginAt) {
         Precondition.isCheckNull(userId);
         Precondition.isCheckNull(latestLoginAt);
-        String sql = "update users set latest_login_at = ? where user_id = ?";
+        String sql = "update users set latest_login_at = ? where user_input_id = ?";
         Connection connection = DbConnectionThreadLocal.getConnection();
         try (PreparedStatement psmt = connection.prepareStatement(sql)) {
             psmt.setString(1, String.valueOf(latestLoginAt));

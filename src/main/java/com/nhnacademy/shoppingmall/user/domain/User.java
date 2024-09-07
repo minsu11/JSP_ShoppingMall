@@ -10,7 +10,6 @@ import java.util.Objects;
 
 @Getter
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class User {
     public enum Auth{
         ROLE_ADMIN,ROLE_USER
@@ -26,7 +25,17 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime latestLoginAt;
 
-
+    public User(Integer id, String userId, String userName, String userPassword, String userBirth, Auth userAuth, int userPoint, LocalDateTime createdAt, LocalDateTime latestLoginAt) {
+        this.id = id;
+        this.userId = userId;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userBirth = userBirth;
+        this.userAuth = userAuth;
+        this.userPoint = userPoint;
+        this.createdAt = createdAt;
+        this.latestLoginAt = latestLoginAt;
+    }
 
     public void setUserName(String userName) {
         this.userName = userName;

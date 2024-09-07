@@ -16,7 +16,7 @@ public class LoginController implements BaseController {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession loginSession = req.getSession(false);
         log.debug("loginSession:{}", loginSession);
-        if (Objects.nonNull(loginSession.getAttribute("login"))) {
+        if (Objects.nonNull(loginSession.getAttribute("loginResponse"))) {
             return "redirect:/index.do";
         }
         return "shop/login/login_form";
