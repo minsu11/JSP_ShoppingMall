@@ -36,10 +36,15 @@
                     </form>
                     <%
                         HttpSession session = request.getSession(false);
-                        if(session != null){
-                            LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
+                        if(session == null){
+                            return;
+                        }
+
+                        LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
+                        if(loginResponse != null){
                             request.setAttribute("login",loginResponse);
                         }
+
 
                 %>
                     <c:choose>

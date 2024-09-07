@@ -14,9 +14,11 @@ public class LogoutController implements BaseController {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession(false);
-        if (Objects.nonNull(httpSession.getAttribute("login"))) {
-            httpSession.removeAttribute("login");
+        if(Objects.nonNull(httpSession)) {
+            if (Objects.nonNull(httpSession.getAttribute("loginResponse"))) {
+                httpSession.removeAttribute("loginResponse");
+            }
         }
-        return "shop/main/index.do";
+        return "redirect:/index.do";
     }
 }
