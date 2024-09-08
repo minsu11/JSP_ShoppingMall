@@ -18,7 +18,15 @@
 
 </head>
 <body>
-
+<%
+    HttpSession session = request.getSession(false);
+    if(session != null){
+        LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
+        if(loginResponse != null){
+            request.setAttribute("login",loginResponse);
+        }
+    }
+%>
     <div class="mainContainer">
         <header class="p-3 bg-dark text-white">
             <div class="container">
@@ -31,20 +39,21 @@
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="/index.do" class="nav-link px-2 text-secondary">Home</a></li>
                         <li><a href="/mypage/mypage.do" class="nav-link px-2 text-white">마이페이지</a></li>
+
+                        <c:choose>
+                            <c:when test="${login.auth.equalsIgnoreCase('ROLE_ADMIN')}">
+                                <li><a href="/admin/admin.do" class="nav-link px-2 text-white">관리자페이지</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <p>1234</p>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                         <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                     </form>
-                    <%
-                        HttpSession session = request.getSession(false);
-                        if(session != null){
-                            LoginResponse loginResponse =(LoginResponse) session.getAttribute("loginResponse");
-                            if(loginResponse != null){
-                                request.setAttribute("login",loginResponse);
-                            }
-                        }
-                %>
+
                     <c:choose>
                         <c:when test="${empty login }">
                             <div class="text-end">

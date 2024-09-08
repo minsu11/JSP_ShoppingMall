@@ -25,15 +25,20 @@ public class LoginPostController implements BaseController {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String userId = req.getParameter("user_id");
         String userPassword = req.getParameter("user_password");
-        LoginResponse loginResponse = userService.doLogin(userId, userPassword);
-        log.debug("user:{}", loginResponse);
-        if (Objects.nonNull(loginResponse)) { // user 존재 시
-            HttpSession loginSession = req.getSession(true);
-            loginSession.setMaxInactiveInterval(3600);
-            loginSession.setAttribute("loginResponse", loginResponse);
-            req.getServletContext().setAttribute("loginSession", loginSession);
-            log.debug("login session:{}", loginSession);
-            return "redirect:/index.do";
+        try{
+
+            LoginResponse loginResponse = userService.doLogin(userId, userPassword);
+            log.debug("user:{}", loginResponse);
+            if (Objects.nonNull(loginResponse)) { // user 존재 시
+                HttpSession loginSession = req.getSession(true);
+                loginSession.setMaxInactiveInterval(3600);
+                loginSession.setAttribute("loginResponse", loginResponse);
+                req.getServletContext().setAttribute("loginSession", loginSession);
+                log.debug("auth: {}",loginResponse.getAuth());
+                return "redirect:/index.do";
+            }
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
         }
         return "redirect:/login.do";
     }

@@ -1,33 +1,26 @@
 <%--
   Created by IntelliJ IDEA.
   User: parkminsu
-  Date: 2024. 9. 7.
-  Time: 오후 11:28
+  Date: 2024. 9. 8.
+  Time: 오후 4:39
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"  session="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="container mt-5">
-<div class="row">
+    <div class="row">
         <!-- 사이드바 -->
         <div class="col-md-3">
             <div class="list-group">
-                <a href="/" class="list-group-item list-group-item-action active" id="Order-link">주문 목록</a>
-                <a href="/" class="list-group-item list-group-item-action active" id="profile-link">회원 정보</a>
-                <a href="#" class="list-group-item list-group-item-action" id="address-link">주소</a>
-                <a href="#" class="list-group-item list-group-item-action" id="points-link">포인트 내역</a>
+                <a href="/" class="list-group-item list-group-item-action active" id="admin-link">관리자 목록</a>
+                <a href="#" class="list-group-item list-group-item-action" id="user-link">회원 목록</a>
+                <a href="#" class="list-group-item list-group-item-action" id="product-link">상품 목록</a>
             </div>
         </div>
         <!-- 콘텐츠 영역 -->
         <div class="col-md-9">
-            <div id="profile-order-list">
-                <h4>주문 목록</h4>
-                <div>
-                </div>
-            </div>
-
-            <div id="profile-content">
-                <h4>회원 정보</h4>
+            <div id="admin-list-content">
+                <h4>관리자 목록</h4>
                 <form>
                     <div class="form-group">
                         <label for="userId">아이디</label>
@@ -47,12 +40,16 @@
                     </div>
                 </form>
             </div>
-            <div id="address-content" style="display: none;">
-                <h4>주소</h4>
+            <div id="user-list-content" style="display: none;">
+                <h4>회원 목록</h4>
                 <p>여기에 주소 정보를 보여줍니다.</p>
             </div>
-            <div id="points-content" style="display: none;">
-                <h4>포인트 내역</h4>
+            <div id="product-list-content" style="display: none;">
+                <h4>상품 목록</h4>
+                <div>
+                    <a href="/admin/product/register.do">등록</a>
+                </div>
+
                 <p>여기에 포인트 내역을 보여줍니다.</p>
             </div>
         </div>
@@ -64,26 +61,24 @@
 <script>
     $(document).ready(function() {
         // 회원 정보 버튼 클릭 시
-        $('#order-link').click(function (){
-           showContent('#profile-order-list',this)
-        });
-        $('#profile-link').click(function() {
-            showContent('#profile-content', this);
+
+        $('#admin-link').click(function() {
+            showContent('#admin-list-content', this);
         });
 
         // 주소 버튼 클릭 시
-        $('#address-link').click(function() {
-            showContent('#address-content', this);
+        $('#user-link').click(function() {
+            showContent('#user-list-content', this);
         });
 
         // 포인트 내역 버튼 클릭 시
-        $('#points-link').click(function() {
-            showContent('#points-content', this);
+        $('#product-link').click(function() {
+            showContent('#product-list-content', this);
         });
 
         function showContent(contentId, clickedLink) {
             // 모든 콘텐츠 숨김
-            $('#profile-content, #address-content, #points-content, #profile-order-list').hide();
+            $('#admin-list-content, #user-list-content, #product-list-content').hide();
             // 선택된 콘텐츠만 표시
             $(contentId).show();
 
@@ -94,3 +89,4 @@
         }
     });
 </script>
+

@@ -15,9 +15,10 @@ public class LoginController implements BaseController {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession loginSession = req.getSession(false);
-        log.debug("loginSession:{}", loginSession);
-        if (Objects.nonNull(loginSession.getAttribute("loginResponse"))) {
-            return "redirect:/index.do";
+        if (Objects.nonNull(loginSession)) {
+            if(Objects.nonNull(loginSession.getAttribute("loginResponse"))) {
+                return "redirect:/index.do";
+            }
         }
         return "shop/login/login_form";
     }

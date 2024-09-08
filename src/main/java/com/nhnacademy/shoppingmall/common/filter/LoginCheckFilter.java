@@ -23,8 +23,10 @@ public class LoginCheckFilter extends HttpFilter {
         HttpSession httpSession = req.getSession(false);
         LoginResponse user = (LoginResponse) httpSession.getAttribute("loginResponse");
         if (Objects.nonNull(user)) {
+            log.debug("LoginCheckFilter dofilter");
             chain.doFilter(req, res);
         } else {
+            log.debug("LoginCheckFilter sendRedirect");
             res.sendRedirect("/login.do");
         }
     }
