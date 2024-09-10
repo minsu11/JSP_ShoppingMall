@@ -21,24 +21,7 @@
         <div class="col-md-9">
             <div id="admin-list-content">
                 <h4>관리자 목록</h4>
-                <form>
-                    <div class="form-group">
-                        <label for="userId">아이디</label>
-                        <p id="userId" name="${user.getUserId()}"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="userName">이름</label>
-                        <input type="text" class="form-control" id="userName" value="홍길동" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="userBirth">생일</label>
-                        <input type="text" class="form-control" id="userBirth" value="1990-05-03" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="userPoints">보유 포인트</label>
-                        <input type="text" class="form-control" id="userPoints" value="1,000,000" readonly>
-                    </div>
-                </form>
+
             </div>
             <div id="user-list-content" style="display: none;">
                 <h4>회원 목록</h4>

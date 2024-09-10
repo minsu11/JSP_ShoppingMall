@@ -11,7 +11,14 @@ import java.util.Objects;
 @AllArgsConstructor
 public class User {
     public enum Auth{
-        ROLE_ADMIN,ROLE_USER
+        ROLE_ADMIN("ROLE_ADMIN"),ROLE_USER("ROLE_USER");
+        private String value;
+        Auth(String value) {
+            this.value = value;
+        }
+        public String getValue() {
+            return value;
+        }
     }
 
     private Integer id;

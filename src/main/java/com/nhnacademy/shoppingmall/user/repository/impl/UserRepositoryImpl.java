@@ -3,18 +3,55 @@ package com.nhnacademy.shoppingmall.user.repository.impl;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.dto.UserInfoResponse;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UserRepositoryImpl implements UserRepository {
+
+    @Override
+    public List<UserInfoResponse> getUserList() {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "select user_id,user_name, user_birth, user_auth, user_point,created_at,latest_login_at from user where user_auth=?";
+        log.debug("sql:{}", sql);
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1,User.Auth.ROLE_ADMIN.getValue());
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                List<UserInfoResponse> userList = new ArrayList<>();
+                while(rs.next()){
+                    UserInfoResponse userInfoResponse = UserInfoResponse.builder()
+                            .id(rs.getString("user_id"))
+                            .name(rs.getString("user_name"))
+                            .birth(rs.getString("user_birth"))
+                            .auth(rs.getString("user_auth"))
+                            .point(rs.getInt("user_point"))
+                            .createdAt(Objects.nonNull(rs.getTimestamp("created_at")) ? rs.getTimestamp("created_at").toLocalDateTime() : null)
+                            .lastedLoginAt(Objects.nonNull(rs.getTimestamp("latest_login_at")) ? rs.getTimestamp("latest_login_at").toLocalDateTime() : null)
+                            .build();
+                    userList.add(userInfoResponse);
+                }
+            }
+        }catch (SQLException e){
+
+        }
+        return List.of();
+    }
+
+    @Override
+    public List<User> getAdminList() {
+        return List.of();
+    }
 
     @Override
     public Optional<User> findByUserIdAndUserPassword(String userId, String userPassword) {
@@ -210,5 +247,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return 0;
     }
+
 
 }
