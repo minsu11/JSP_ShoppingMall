@@ -22,7 +22,7 @@ public class LoginCheckFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession httpSession = req.getSession(false);
         if(Objects.isNull(httpSession)) {
-            res.sendRedirect(req.getContextPath() + "/login.do");
+            res.sendRedirect( "/login.do");
         }
         LoginResponse user = (LoginResponse) httpSession.getAttribute("loginResponse");
         if (Objects.nonNull(user)) {

@@ -23,11 +23,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<UserInfoResponse> getUserList() {
         Connection connection = DbConnectionThreadLocal.getConnection();
-        String sql = "select user_id,user_name, user_birth, user_auth, user_point,created_at,latest_login_at from user where user_auth=?";
+        String sql = "select user_id,user_name, user_birth, user_auth, user_point,created_at,latest_login_at from users where user_auth=?";
         log.debug("sql:{}", sql);
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,User.Auth.ROLE_ADMIN.getValue());
+            preparedStatement.setString(1,User.Auth.ROLE_USER.getValue());
             try(ResultSet rs = preparedStatement.executeQuery()){
                 List<UserInfoResponse> userList = new ArrayList<>();
                 while(rs.next()){
@@ -42,6 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
                             .build();
                     userList.add(userInfoResponse);
                 }
+                return userList;
             }
         }catch (SQLException e){
 
@@ -52,11 +53,12 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<AdminUserInfoResponse> getAdminList() {
         Connection connection = DbConnectionThreadLocal.getConnection();
-        String sql = "select user_id,user_name, user_birth, user_auth from user where user_auth=?";
+        String sql = "select user_id,user_name, user_birth, user_auth, user_point from users where user_auth=?";
         log.debug("sql:{}", sql);
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,User.Auth.ROLE_USER.getValue());
+            preparedStatement.setString(1,User.Auth.ROLE_ADMIN.getValue());
+            log.info("auth: {}", User.Auth.ROLE_ADMIN.getValue());
             try(ResultSet rs = preparedStatement.executeQuery()){
                 List<AdminUserInfoResponse> userList = new ArrayList<>();
                 while(rs.next()){
@@ -65,9 +67,11 @@ public class UserRepositoryImpl implements UserRepository {
                             .name(rs.getString("user_name"))
                             .birth(rs.getString("user_birth"))
                             .auth(rs.getString("user_auth"))
+                            .point(rs.getInt("user_point"))
                             .build();
                     userList.add(adminUserInfoResponse);
                 }
+                return userList;
             }
         }catch (SQLException e){
             log.info(e.getMessage());

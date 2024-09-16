@@ -1,5 +1,6 @@
 package com.nhnacademy.shoppingmall.common.filter;
 
+import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -24,6 +25,10 @@ public class AdminCheckFilter extends HttpFilter {
             res.sendError(HttpServletResponse.SC_FORBIDDEN);
         } else{
             log.debug("admin filter");
+            String path = req.getRequestURI();
+            log.debug("path: {}", path);
+//            RequestDispatcher rd = req.getRequestDispatcher("/admin/index.jsp");
+
             chain.doFilter(req, res);
         }
 

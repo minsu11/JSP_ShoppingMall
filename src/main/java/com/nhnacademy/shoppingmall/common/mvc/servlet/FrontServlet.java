@@ -44,6 +44,7 @@ public class FrontServlet extends HttpServlet {
                 log.debug("viewName:{}", viewResolver.getPath(viewName));
                 req.setAttribute(ViewResolver.LAYOUT_CONTENT_HOLDER, viewResolver.getPath(viewName));
                 RequestDispatcher rd = req.getRequestDispatcher(layout);
+                log.debug("layout:{}", layout);
                 rd.include(req, resp);
             }
         } catch (Exception e) {

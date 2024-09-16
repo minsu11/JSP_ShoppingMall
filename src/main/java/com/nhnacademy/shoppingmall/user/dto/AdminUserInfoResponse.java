@@ -22,4 +22,5 @@ public class AdminUserInfoResponse {
     private String name;
     private String birth;
     private String auth;
+    private Integer point;
 }

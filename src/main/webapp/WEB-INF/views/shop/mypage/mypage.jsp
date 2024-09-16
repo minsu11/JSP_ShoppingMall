@@ -13,7 +13,7 @@
         <div class="col-md-3">
             <div class="list-group">
                 <a href="/mypage/order.do" class="list-group-item list-group-item-action active" id="order-link">주문 목록</a>
-                <a href="/" class="list-group-item list-group-item-action" id="profile-link">회원 정보</a>
+                <a href="/mypage/user-info.do" class="list-group-item list-group-item-action" id="profile-link">회원 정보</a>
                 <a href="#" class="list-group-item list-group-item-action" id="address-link">주소</a>
                 <a href="#" class="list-group-item list-group-item-action" id="points-link">포인트 내역</a>
             </div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div id="profile-content">
+            <div id="profile-content" style="display: none">
                 <h4>회원 정보</h4>
                 <form>
                     <div class="form-group">
@@ -35,15 +35,15 @@
                     </div>
                     <div class="form-group">
                         <label for="userName">이름</label>
-                        <input type="text" class="form-control" id="userName" value="홍길동" readonly>
+                        <p id="userName">${user.name}</p>
                     </div>
                     <div class="form-group">
                         <label for="userBirth">생일</label>
-                        <input type="text" class="form-control" id="userBirth" value="1990-05-03" readonly>
+                        <p id="userBirth">${user.birth}</p>
                     </div>
                     <div class="form-group">
                         <label for="userPoints">보유 포인트</label>
-                        <input type="text" class="form-control" id="userPoints" value="1,000,000" readonly>
+                        <p id="userPoints">${user.point}</p>
                     </div>
                 </form>
             </div>

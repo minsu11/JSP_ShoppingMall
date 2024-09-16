@@ -12,7 +12,6 @@ public class ViewResolver {
     public static final String LAYOUT_CONTENT_HOLDER = "layout_content_holder";
     public static final String LAYOUT_MYPAGE = "layout_mypage";
 
-
     private final String prefix;
     private final String postfix;
 
@@ -47,7 +46,7 @@ public class ViewResolver {
     }
 
     public String getLayOut(String viewName) {
-        if (viewName.startsWith("/admin")) {
+        if (viewName.contains("/admin")) {
             return DEFAULT_ADMIN_LAYOUT;
         }
         return DEFAULT_SHOP_LAYOUT;

@@ -42,10 +42,9 @@
 
                         <c:choose>
                             <c:when test="${login.auth.equalsIgnoreCase('ROLE_ADMIN')}">
-                                <li><a href="/admin/admin.do" class="nav-link px-2 text-white">관리자페이지</a></li>
+                                <li><a href="/admin/auth/admin/list.do" class="nav-link px-2 text-white">관리자페이지</a></li>
                             </c:when>
                             <c:otherwise>
-                                <p>1234</p>
                             </c:otherwise>
                         </c:choose>
                     </ul>

@@ -4,6 +4,7 @@ import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.dto.AdminUserInfoResponse;
 import com.nhnacademy.shoppingmall.user.dto.LoginResponse;
+import com.nhnacademy.shoppingmall.user.dto.UserInfoResponse;
 import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
 import com.nhnacademy.shoppingmall.user.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
@@ -70,5 +71,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<AdminUserInfoResponse> getAdminUserInfo() {
         return userRepository.getAdminList();
+    }
+
+    @Override
+    public List<UserInfoResponse> getUserInfoList() {
+        return userRepository.getUserList();
     }
 }
