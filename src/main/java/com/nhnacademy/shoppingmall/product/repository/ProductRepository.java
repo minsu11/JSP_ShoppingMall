@@ -12,4 +12,5 @@ package com.nhnacademy.shoppingmall.product.repository;
  * 2024. 9. 16.        parkminsu       최초 생성
  */
 public interface ProductRepository {
+
 }
