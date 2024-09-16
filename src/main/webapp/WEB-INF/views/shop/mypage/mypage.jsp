@@ -12,8 +12,8 @@
         <!-- 사이드바 -->
         <div class="col-md-3">
             <div class="list-group">
-                <a href="/" class="list-group-item list-group-item-action active" id="Order-link">주문 목록</a>
-                <a href="/" class="list-group-item list-group-item-action active" id="profile-link">회원 정보</a>
+                <a href="/mypage/order.do" class="list-group-item list-group-item-action active" id="order-link">주문 목록</a>
+                <a href="/" class="list-group-item list-group-item-action" id="profile-link">회원 정보</a>
                 <a href="#" class="list-group-item list-group-item-action" id="address-link">주소</a>
                 <a href="#" class="list-group-item list-group-item-action" id="points-link">포인트 내역</a>
             </div>

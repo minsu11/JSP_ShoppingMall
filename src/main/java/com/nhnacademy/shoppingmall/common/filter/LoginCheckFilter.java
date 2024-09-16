@@ -21,6 +21,9 @@ public class LoginCheckFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession httpSession = req.getSession(false);
+        if(Objects.isNull(httpSession)) {
+            res.sendRedirect(req.getContextPath() + "/login.do");
+        }
         LoginResponse user = (LoginResponse) httpSession.getAttribute("loginResponse");
         if (Objects.nonNull(user)) {
             log.debug("LoginCheckFilter dofilter");
