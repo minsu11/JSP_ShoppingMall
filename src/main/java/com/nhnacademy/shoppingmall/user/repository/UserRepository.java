@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.user.repository;
 
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.dto.AdminUserInfoResponse;
 import com.nhnacademy.shoppingmall.user.dto.UserInfoResponse;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository {
     List<UserInfoResponse> getUserList();
-    List<User> getAdminList();
+    List<AdminUserInfoResponse> getAdminList();
     Optional<User> findByUserIdAndUserPassword(String userId, String userPassword);
     Optional<User> findById(Integer id);
     Optional<User> findByInputId(String inputId);

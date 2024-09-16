@@ -3,6 +3,7 @@ package com.nhnacademy.shoppingmall.user.repository.impl;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.dto.AdminUserInfoResponse;
 import com.nhnacademy.shoppingmall.user.dto.UserInfoResponse;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 import java.sql.Connection;
@@ -49,7 +50,28 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> getAdminList() {
+    public List<AdminUserInfoResponse> getAdminList() {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "select user_id,user_name, user_birth, user_auth from user where user_auth=?";
+        log.debug("sql:{}", sql);
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1,User.Auth.ROLE_USER.getValue());
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                List<AdminUserInfoResponse> userList = new ArrayList<>();
+                while(rs.next()){
+                    AdminUserInfoResponse adminUserInfoResponse = AdminUserInfoResponse.builder()
+                            .id(rs.getString("user_id"))
+                            .name(rs.getString("user_name"))
+                            .birth(rs.getString("user_birth"))
+                            .auth(rs.getString("user_auth"))
+                            .build();
+                    userList.add(adminUserInfoResponse);
+                }
+            }
+        }catch (SQLException e){
+            log.info(e.getMessage());
+        }
         return List.of();
     }
 

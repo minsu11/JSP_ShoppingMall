@@ -2,12 +2,15 @@ package com.nhnacademy.shoppingmall.user.service.impl;
 
 import com.nhnacademy.shoppingmall.common.precondition.Precondition;
 import com.nhnacademy.shoppingmall.user.domain.User;
+import com.nhnacademy.shoppingmall.user.dto.AdminUserInfoResponse;
 import com.nhnacademy.shoppingmall.user.dto.LoginResponse;
 import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
 import com.nhnacademy.shoppingmall.user.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 import com.nhnacademy.shoppingmall.user.service.UserService;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,4 +67,8 @@ public class UserServiceImpl implements UserService {
         return new LoginResponse(user.getId(), user.getUserAuth().name());
     }
 
+    @Override
+    public List<AdminUserInfoResponse> getAdminUserInfo() {
+        return userRepository.getAdminList();
+    }
 }

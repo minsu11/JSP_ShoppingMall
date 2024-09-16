@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class AdminUserInfoResponse {
-    private String userId;
-    private String userName;
+    private String id;
+    private String name;
     private String birth;
+    private String auth;
 }
