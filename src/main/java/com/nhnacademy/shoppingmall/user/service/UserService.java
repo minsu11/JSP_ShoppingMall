@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * The interface User service.
  */
-public interface UserService {
+public interface UserService  {
 
     /**
      * Gets user.

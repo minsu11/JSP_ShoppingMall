@@ -83,7 +83,7 @@
                            id="admin-link">관리자 목록</a>
                         <a href="/admin/auth/user/list.do" class="list-group-item list-group-item-action" id="user-link">회원
                             목록</a>
-                        <a href="#" class="list-group-item list-group-item-action" id="product-link">상품 목록</a>
+                        <a href="/admin/product/list.do" class="list-group-item list-group-item-action" id="product-link">상품 목록</a>
                     </div>
                 </div>
                 <div class="col-md-9" style="background: white">

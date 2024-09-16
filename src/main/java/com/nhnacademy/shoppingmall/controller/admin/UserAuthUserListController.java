@@ -3,6 +3,7 @@ package com.nhnacademy.shoppingmall.controller.admin;
 import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import com.nhnacademy.shoppingmall.common.mvc.annotation.Transaction;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
+import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.dto.UserInfoResponse;
 import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
 import com.nhnacademy.shoppingmall.user.service.UserService;
@@ -26,10 +27,11 @@ import java.util.List;
 @Transaction
 @RequestMapping(method = RequestMapping.Method.GET, value = "/admin/auth/user/list.do")
 public class UserAuthUserListController implements BaseController {
-    private UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        UserService userService = (UserService) req.getServletContext().getAttribute("userService");
+
         List<UserInfoResponse> userInfoResponseList = userService.getUserInfoList();
         req.setAttribute("userList", userInfoResponseList);
         return "shop/admin/admin-user-list";

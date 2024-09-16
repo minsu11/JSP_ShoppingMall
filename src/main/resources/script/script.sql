@@ -1,28 +1,29 @@
 DROP TABLE IF EXISTS `Categories`;
 
 CREATE TABLE `Categories` (
-                              `CategoryID`	INT	NOT NULL auto_increment,
+                              `category_id`	INT	NOT NULL auto_increment,
                               `CategoryName`	varchar(50)	NOT NULL,
-                              primary key(`CategoryID`)
+                              primary key(`category_id`)
 );
 
 CREATE TABLE `Products` (
-                            `ProductID`	INT	NOT NULL auto_increment,
-                            `ModelNumber`	nvarchar(10)	NOT NULL,
-                            `ModelName`	nvarchar(120)	NOT NULL,
-                            `ProductImage`	nvarchar(30)	NOT NULL,
-                            `UnitCost`	decimal(15)	NOT NULL,
-                            `Description`	text	NOT NULL,
-                            primary key(`ProductID`)
+                            `product_id`	INT	NOT NULL auto_increment,
+                            `product_number`	nvarchar(10)	NOT NULL,
+                            `product_name`	nvarchar(120)	NOT NULL,
+                            `unit_cost`	decimal(15)	NOT NULL,
+                            `description`	text	NOT NULL,
+                            `product_inventory` INT NOT NULL default 0,
+                            `product_created_at` datetime NOT NULL default now(),
+                            primary key(`product_id`)
 );
 
 CREATE TABLE `Reviews` (
-                           `ReviewID`	int	NOT NULL auto_increment,
-                           `Rating`	int	NOT NULL,
-                           `Comments`	text	NOT NULL,
-                           `ProductID`	INT	NULL,
+                           `review_id`	int	NOT NULL auto_increment,
+                           `rating`	int	NOT NULL,
+                           `comments`	text	NOT NULL,
+                           `product_id`	INT	NULL,
                            `user_id`	int	NOT NULL	COMMENT '아이디',
-                           primary key(`ReviewID`)
+                           primary key(`review_id`)
 );
 
 CREATE TABLE `Orders` (
@@ -38,7 +39,7 @@ DROP TABLE IF EXISTS `OrderDetails`;
 
 CREATE TABLE `OrderDetails` (
                                 `order_detail_id` INT NOT NULL auto_increment,
-                                `ProductID`	INT	NOT NULL,
+                                `product_id`	INT	NOT NULL,
                                 `order_id`	int	NOT NULL,
                                 `quantity`	int	NOT NULL,
                                 `unit_cost`	decimal(15)	NOT NULL,
@@ -62,7 +63,7 @@ DROP TABLE IF EXISTS `payment`;
 
 CREATE TABLE `payment` (
                            `payment_id`	INT	NOT NULL auto_increment,
-                           `order_id`	int	NOT NULL,
+                           `order_id`	int	NOT NULL COMMENT '주문 아이디',
                            `user_id`	int	NOT NULL	COMMENT '아이디',
                            primary key(`payment_id`)
 
@@ -71,12 +72,12 @@ CREATE TABLE `payment` (
 DROP TABLE IF EXISTS `ShoppingCart`;
 
 CREATE TABLE `ShoppingCart` (
-                                `RecordID`	int	NOT NULL auto_increment,
-                                `CartID`	nvarchar(150)	NOT NULL,
-                                `Quantity`	int	NOT NULL,
-                                `DateCreateed`	Datetime	NOT NULL	DEFAULT Now(),
-                                `ProductID`	INT	NOT NULL,
-                                primary key(`RecordID`)
+                                `record_id`	int	NOT NULL auto_increment,
+                                `cart_id`	nvarchar(150)	NOT NULL,
+                                `quantity`	int	NOT NULL,
+                                `shopping_cart_created_at`	Datetime	NOT NULL	DEFAULT Now(),
+                                `product_id`	INT	NOT NULL,
+                                primary key(`record_id`)
 );
 
 
@@ -84,7 +85,7 @@ CREATE TABLE `ShoppingCart` (
 CREATE TABLE `point_history` (
                                  `point_history_id`	int	NOT NULL auto_increment,
                                  `date`	DATE	NOT NULL,
-                                 `type`	INTEGER	NOT NULL,
+                                 `type`	Tinyint(1)	NOT NULL COMMENT '적립 또는 사용',
                                  `detail`	VARCHAR(100)	NOT NULL,
                                  `used_points`	DATE	NOT NULL,
                                  `points_detail`	INTEGER	NOT NULL,
@@ -96,9 +97,9 @@ CREATE TABLE `point_history` (
 DROP TABLE IF EXISTS `ProductCategory`;
 
 CREATE TABLE `ProductCategory` (
-                                   `ProductID`	INT	NOT NULL,
-                                   `CategoryID`	INT	NOT NULL,
-    primary key (`ProductID`,`CategoryID`)
+                                   `product_id`	INT	NOT NULL,
+                                   `category_id`	INT	NOT NULL,
+    primary key (`product_id`,`category_id`)
 );
 
 DROP TABLE IF EXISTS `Address`;
@@ -112,7 +113,7 @@ CREATE TABLE `Address` (
 
 CREATE TABLE `Image` (
                          `image_id`	int	NOT NULL auto_increment,
-                         `ProductID`	INT	NOT NULL,
+                         `product_id`	INT	NOT NULL,
                          `image_path`	varchar(50)	NOT NULL,
                          `image_created_at`	datetime	NOT NULL,
                          primary key(`image_id`)
@@ -122,10 +123,10 @@ create index `user_created_date_index` on `users`(created_at);
 
 
 ALTER TABLE `Reviews` ADD CONSTRAINT `FK_Products_TO_Reviews_1` FOREIGN KEY (
-                                                                             `ProductID`
+                                                                             `product_id`
     )
     REFERENCES `Products` (
-                           `ProductID`
+                           `product_id`
         );
 
 ALTER TABLE `Reviews` ADD CONSTRAINT `FK_users_TO_Reviews_1` FOREIGN KEY (
@@ -143,10 +144,10 @@ ALTER TABLE `Orders` ADD CONSTRAINT `FK_users_TO_Orders_1` FOREIGN KEY (
         );
 
 ALTER TABLE `OrderDetails` ADD CONSTRAINT `FK_Products_TO_OrderDetails_1` FOREIGN KEY (
-                                                                                       `ProductID`
+                                                                                       `product_id`
     )
     REFERENCES `Products` (
-                           `ProductID`
+                           `product_id`
         );
 
 ALTER TABLE `OrderDetails` ADD CONSTRAINT `FK_Orders_TO_OrderDetails_1` FOREIGN KEY (
@@ -171,10 +172,10 @@ ALTER TABLE `payment` ADD CONSTRAINT `FK_users_TO_payment_1` FOREIGN KEY (
         );
 
 ALTER TABLE `ShoppingCart` ADD CONSTRAINT `FK_Products_TO_ShoppingCart_1` FOREIGN KEY (
-                                                                                       `ProductID`
+                                                                                       `product_id`
     )
     REFERENCES `Products` (
-                           `ProductID`
+                           `product_id`
         );
 
 ALTER TABLE `point_history` ADD CONSTRAINT `FK_users_TO_point_history_1` FOREIGN KEY (
@@ -185,17 +186,17 @@ ALTER TABLE `point_history` ADD CONSTRAINT `FK_users_TO_point_history_1` FOREIGN
         );
 
 ALTER TABLE `ProductCategory` ADD CONSTRAINT `FK_Products_TO_ProductCategory_1` FOREIGN KEY (
-                                                                                             `ProductID`
+                                                                                             `product_id`
     )
     REFERENCES `Products` (
-                           `ProductID`
+                           `product_id`
         );
 
 ALTER TABLE `ProductCategory` ADD CONSTRAINT `FK_Categories_TO_ProductCategory_1` FOREIGN KEY (
-                                                                                               `CategoryID`
+                                                                                               `category_id`
     )
     REFERENCES `Categories` (
-                             `CategoryID`
+                             `category_id`
         );
 
 ALTER TABLE `Address` ADD CONSTRAINT `FK_users_TO_Address_1` FOREIGN KEY (
@@ -206,9 +207,9 @@ ALTER TABLE `Address` ADD CONSTRAINT `FK_users_TO_Address_1` FOREIGN KEY (
         );
 
 ALTER TABLE `Image` ADD CONSTRAINT `FK_Products_TO_Image_1` FOREIGN KEY (
-                                                                         `ProductID`
+                                                                         `product_id`
     )
     REFERENCES `Products` (
-                           `ProductID`
+                           `product_id`
         );
 

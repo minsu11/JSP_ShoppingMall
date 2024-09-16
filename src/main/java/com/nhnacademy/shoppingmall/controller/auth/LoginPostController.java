@@ -19,10 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(method = RequestMapping.Method.POST, value = "/loginAction.do")
 public class LoginPostController implements BaseController {
 
-    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        UserService userService = (UserService) req.getServletContext().getAttribute("userService");
+
         String userId = req.getParameter("user_id");
         String userPassword = req.getParameter("user_password");
         try{

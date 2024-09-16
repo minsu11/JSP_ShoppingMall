@@ -1,5 +1,9 @@
 package com.nhnacademy.shoppingmall.product.service.impl;
 
+import com.nhnacademy.shoppingmall.product.repository.ProductRepository;
+import com.nhnacademy.shoppingmall.product.service.ProductService;
+import lombok.RequiredArgsConstructor;
+
 /**
  * packageName    : com.nhnacademy.shoppingmall.product.service.impl
  * fileName       : ProductServiceImpl
@@ -11,5 +15,7 @@ package com.nhnacademy.shoppingmall.product.service.impl;
  * -----------------------------------------------------------
  * 2024. 9. 16.        parkminsu       최초 생성
  */
-public class ProductServiceImpl {
+@RequiredArgsConstructor
+public class ProductServiceImpl implements ProductService {
+    private final ProductRepository productRepository;
 }

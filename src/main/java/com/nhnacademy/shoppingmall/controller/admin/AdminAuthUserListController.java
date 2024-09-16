@@ -28,9 +28,10 @@ import java.util.List;
 @Transaction
 @RequestMapping(method = RequestMapping.Method.GET,value = "/admin/auth/admin/list.do")
 public class AdminAuthUserListController implements BaseController {
-    private UserService userService = new UserServiceImpl(new UserRepositoryImpl());
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        UserService userService = (UserService) req.getServletContext().getAttribute("userService");
         List<AdminUserInfoResponse> adminUserInfoResponseList = userService.getAdminUserInfo();
         log.info("list: {}",adminUserInfoResponseList.toString() );
         req.setAttribute("adminUserList", adminUserInfoResponseList);
