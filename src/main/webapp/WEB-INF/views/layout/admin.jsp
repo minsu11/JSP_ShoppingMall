@@ -84,7 +84,9 @@
                         <a href="/admin/auth/user/list.do" class="list-group-item list-group-item-action" id="user-link">회원
                             목록</a>
                         <a href="/admin/product/list.do" class="list-group-item list-group-item-action" id="product-link">상품 목록</a>
+                        <a href="/admin/category/list.do" class="list-group-item" >카테고리 관리</a>
                     </div>
+
                 </div>
                 <div class="col-md-9" style="background: white">
 

@@ -1,6 +1,8 @@
 package com.nhnacademy.shoppingmall.product.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,11 +19,13 @@ import java.time.LocalDateTime;
  * 2024. 9. 16.        parkminsu       최초 생성
  */
 @Getter
+@AllArgsConstructor
 public class Product {
     private String id;
+    private String number;
     private String name;
     private String description;
-    private BigDecimal price;
-    private String imageUrl;
+    private Integer unitCost;
+    private Integer inventory;
     private LocalDateTime createdAt;
 }

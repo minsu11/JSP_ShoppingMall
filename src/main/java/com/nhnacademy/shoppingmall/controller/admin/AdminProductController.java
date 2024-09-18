@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.controller.admin;
 
 import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
+import com.nhnacademy.shoppingmall.product.service.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,10 @@ public class AdminProductController implements BaseController {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        return "";
+        ProductService productService =(ProductService) req.getServletContext().getAttribute("productService");
+
+
+
+        return "shop/admin/admin-product-list";
     }
 }
