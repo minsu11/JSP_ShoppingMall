@@ -8,7 +8,7 @@ CREATE TABLE `Categories` (
 
 CREATE TABLE `Products` (
                             `product_id`	INT	NOT NULL auto_increment,
-                            `product_number`	nvarchar(10)	NOT NULL,
+                            `product_number`	nvarchar(10)	NOT NULL unique ,
                             `product_name`	nvarchar(120)	NOT NULL,
                             `unit_cost`	decimal(15)	NOT NULL,
                             `description`	text	NOT NULL,
