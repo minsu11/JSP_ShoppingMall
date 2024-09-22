@@ -2,6 +2,9 @@ package com.nhnacademy.shoppingmall.common.initialize;
 
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
 import com.nhnacademy.shoppingmall.common.mvc.controller.ControllerFactory;
+import com.nhnacademy.shoppingmall.image.repository.impl.ImageRepositoryImpl;
+import com.nhnacademy.shoppingmall.image.service.impl.ImageServiceImpl;
+import com.nhnacademy.shoppingmall.product.repository.ProductRepository;
 import com.nhnacademy.shoppingmall.product.repository.impl.ProductRepositoryImpl;
 import com.nhnacademy.shoppingmall.product.service.impl.ProductServiceImpl;
 import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
@@ -25,7 +28,9 @@ public class WebAppInitializer implements ServletContainerInitializer {
     public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
         ControllerFactory controllerFactory = new ControllerFactory();
         controllerFactory.initialize(c,ctx);
+        ctx.setAttribute("productRepository", new ProductRepositoryImpl());
         ctx.setAttribute("userService", new UserServiceImpl(new UserRepositoryImpl()));
-        ctx.setAttribute("productService", new ProductServiceImpl(new ProductRepositoryImpl()));
+        ctx.setAttribute("productService", new ProductServiceImpl((ProductRepository) ctx.getAttribute("productRepository")));
+        ctx.setAttribute("imageService", new ImageServiceImpl(new ImageRepositoryImpl(), (ProductRepository) ctx.getAttribute("productRepository")));
     }
 }

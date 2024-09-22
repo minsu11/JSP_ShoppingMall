@@ -3,8 +3,10 @@ package com.nhnacademy.shoppingmall.common.mvc.controller;
 import com.nhnacademy.shoppingmall.common.mvc.annotation.Transaction;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -25,7 +27,7 @@ public class ControllerProxy {
         this.baseController = baseController;
     }
 
-    public String execute(HttpServletRequest request, HttpServletResponse response){
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Transaction t = baseController.getClass().getAnnotation(Transaction.class);
         boolean isTransaction = Objects.nonNull(t);
 

@@ -1,3 +1,4 @@
+use ShoppingMall;
 DROP TABLE IF EXISTS `Categories`;
 
 CREATE TABLE `Categories` (
@@ -10,7 +11,7 @@ CREATE TABLE `Products` (
                             `product_id`	INT	NOT NULL auto_increment,
                             `product_number`	nvarchar(10)	NOT NULL unique ,
                             `product_name`	nvarchar(120)	NOT NULL,
-                            `unit_cost`	decimal(15)	NOT NULL,
+                            `unit_cost`	int	NOT NULL,
                             `description`	text	NOT NULL,
                             `product_inventory` INT NOT NULL default 0,
                             `product_created_at` datetime NOT NULL default now(),
@@ -114,7 +115,7 @@ CREATE TABLE `Address` (
 CREATE TABLE `Image` (
                          `image_id`	int	NOT NULL auto_increment,
                          `product_id`	INT	NOT NULL,
-                         `image_path`	varchar(50)	NOT NULL,
+                         `image_path`	varchar(200)	NOT NULL,
                          `image_created_at`	datetime	NOT NULL,
                          primary key(`image_id`)
 );

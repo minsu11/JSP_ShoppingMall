@@ -25,5 +25,6 @@ public class AdminPageProductInfo {
     private Integer cost;
     private Integer inventory;
     private LocalDateTime createdDate;
+    private String img;
 
 }

@@ -4,6 +4,7 @@ import com.nhnacademy.shoppingmall.product.domain.Product;
 import com.nhnacademy.shoppingmall.product.dto.AdminPageProductInfo;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * packageName    : com.nhnacademy.shoppingmall.product.repository
@@ -20,5 +21,7 @@ public interface ProductRepository {
     List<AdminPageProductInfo> findAllAdminPageProductInfo();
 
     int saveProduct(Product product);
+
+    Optional<Product> findProductByNumber(String Number);
 
 }

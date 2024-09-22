@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.product.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,9 +20,9 @@ import java.time.LocalDateTime;
  * 2024. 9. 16.        parkminsu       최초 생성
  */
 @Getter
-@AllArgsConstructor
+@Builder
 public class Product {
-    private String id;
+    private Integer id;
     private String number;
     private String name;
     private String description;

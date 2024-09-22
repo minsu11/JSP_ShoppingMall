@@ -9,6 +9,7 @@ import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLoca
 import com.nhnacademy.shoppingmall.common.mvc.view.ViewResolver;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@MultipartConfig(maxFileSize = 1024*1024*10, maxRequestSize = 1024*1024*12)
 @WebServlet(name = "frontServlet", urlPatterns = {"*.do"})
 public class FrontServlet extends HttpServlet {
     private ControllerFactory controllerFactory;
